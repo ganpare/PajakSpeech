@@ -1,0 +1,14 @@
+fastapi==0.115.0
+uvicorn==0.24.0
+gunicorn==23.0.0
+jinja2==3.1.2
+aiofiles==23.2.1
+python-multipart==0.0.6
+sqlalchemy==2.0.21
+email-validator==2.0.0
+numpy==1.24.3
+torch==2.1.0
+transformers==4.35.0
+librosa==0.10.1
+pydantic==2.4.2
+ffmpeg-python==0.2.0

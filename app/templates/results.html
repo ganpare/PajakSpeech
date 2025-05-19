@@ -1,0 +1,166 @@
+{% extends "layout.html" %}
+
+{% block title %}Transcription Results{% endblock %}
+
+{% block content %}
+<div id="results-container" data-job-id="{{ job_id }}">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Transcription Results</h1>
+        <span class="badge bg-info" id="status-badge">{{ job_status }}</span>
+    </div>
+    
+    <!-- Error Alert -->
+    <div id="error-alert" class="alert alert-danger d-none" role="alert"></div>
+    
+    <!-- Progress Bar (shown when processing) -->
+    {% if job_status != 'completed' and job_status != 'failed' %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h4 class="mb-3">Processing Your Audio</h4>
+            <div class="progress mb-3">
+                <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                     role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+            <p class="text-muted">This may take several minutes depending on the audio length.</p>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-container my-5 {% if job_status == 'completed' %}d-none{% endif %}">
+        <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Loading your transcription results...</p>
+    </div>
+    
+    <!-- Audio Player for Segments -->
+    <div class="audio-player-container mb-4 {% if job_status != 'completed' %}d-none{% endif %}">
+        <h5>Audio Player</h5>
+        <p class="text-muted small">Click on any segment or word to hear the corresponding audio.</p>
+        <audio id="segment-player" controls class="w-100">
+            <source src="" type="audio/wav">
+            Your browser doesn't support HTML5 audio.
+        </audio>
+    </div>
+    
+    <!-- Results Content -->
+    <div id="results-content" class="{% if job_status != 'completed' %}d-none{% endif %}">
+        <!-- Tabs for Different Views -->
+        <ul class="nav nav-tabs" id="resultsTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="segments-tab" data-bs-toggle="tab" data-bs-target="#segments-tab-pane" type="button" role="tab">
+                    Segments View
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="words-tab" data-bs-toggle="tab" data-bs-target="#words-tab-pane" type="button" role="tab">
+                    Words View
+                </button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="resultsTabContent">
+            <!-- Segments Tab -->
+            <div class="tab-pane fade show active" id="segments-tab-pane" role="tabpanel" aria-labelledby="segments-tab" tabindex="0">
+                <div id="segments-container" class="d-none">
+                    <!-- Segments will be loaded here -->
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Words Tab -->
+            <div class="tab-pane fade" id="words-tab-pane" role="tabpanel" aria-labelledby="words-tab" tabindex="0">
+                <div id="words-container" class="d-none">
+                    <!-- Words will be loaded here -->
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Download Section -->
+    <div id="download-section" class="mt-5 d-none">
+        <h2 class="mb-4">Download Results</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 download-option">
+                    <div class="card-body text-center">
+                        <i class="bi bi-file-earmark-text fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">SRT Format</h5>
+                        <p class="card-text">Standard subtitle format compatible with most video players.</p>
+                        <button class="btn btn-outline-primary download-btn" data-format="srt">
+                            <i class="bi bi-download me-2"></i>
+                            Download SRT
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 download-option">
+                    <div class="card-body text-center">
+                        <i class="bi bi-file-earmark-code fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">VTT Format</h5>
+                        <p class="card-text">WebVTT format for web videos with word-level timing.</p>
+                        <button class="btn btn-outline-primary download-btn" data-format="vtt">
+                            <i class="bi bi-download me-2"></i>
+                            Download VTT
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 download-option">
+                    <div class="card-body text-center">
+                        <i class="bi bi-file-earmark-spreadsheet fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">CSV Format</h5>
+                        <p class="card-text">Spreadsheet format with segment timestamps and text.</p>
+                        <button class="btn btn-outline-primary download-btn" data-format="csv">
+                            <i class="bi bi-download me-2"></i>
+                            Download CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 download-option">
+                    <div class="card-body text-center">
+                        <i class="bi bi-file-earmark-music fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">LRC Format</h5>
+                        <p class="card-text">Lyrics format compatible with media players.</p>
+                        <button class="btn btn-outline-primary download-btn" data-format="lrc">
+                            <i class="bi bi-download me-2"></i>
+                            Download LRC
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 download-option">
+                    <div class="card-body text-center">
+                        <i class="bi bi-file-earmark-code fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">JSON Format</h5>
+                        <p class="card-text">Complete data with all timestamps and metadata.</p>
+                        <button class="btn btn-outline-primary download-btn" data-format="json">
+                            <i class="bi bi-download me-2"></i>
+                            Download JSON
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/results.js') }}"></script>
+{% endblock %}

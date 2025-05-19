@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}Audio Transcription App{% endblock %}
+
+{% block content %}
+<div class="text-center my-5">
+    <h1 class="display-4 mb-4">Audio Transcription with AI</h1>
+    <p class="lead mb-4">
+        Upload audio files and get accurate transcriptions with timestamps using NVIDIA's Parakeet ASR model.
+    </p>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3">Features</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="mb-3 text-primary">
+                                    <i class="bi bi-upload fs-1"></i>
+                                </div>
+                                <h5>Easy Upload</h5>
+                                <p class="text-center">Support for large audio files in WAVE format.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="mb-3 text-primary">
+                                    <i class="bi bi-activity fs-1"></i>
+                                </div>
+                                <h5>Precise Timing</h5>
+                                <p class="text-center">Accurate word and segment-level timestamps.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="mb-3 text-primary">
+                                    <i class="bi bi-file-earmark-text fs-1"></i>
+                                </div>
+                                <h5>Multiple Formats</h5>
+                                <p class="text-center">Download results as SRT, VTT, CSV, JSON, and LRC.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="/upload" class="btn btn-primary btn-lg">
+                <i class="bi bi-cloud-upload-fill me-2"></i>
+                Start Transcribing
+            </a>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3">Powered by State-of-the-Art AI</h3>
+                    <p>
+                        This transcription app utilizes the NVIDIA Parakeet TDT ASR model (nvidia/parakeet-tdt-0.6b-v2), 
+                        a powerful automatic speech recognition system designed for accurate and efficient transcription 
+                        with precise timestamp detection.
+                    </p>
+                    <p class="mb-0">
+                        <strong>Perfect for:</strong> Transcribing interviews, creating subtitles, generating meeting 
+                        notes, and more.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

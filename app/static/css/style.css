@@ -1,0 +1,109 @@
+/* Custom styles for Transcription App */
+
+/* Body and general styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+}
+
+/* Upload page styles */
+.upload-area {
+    border: 2px dashed var(--bs-gray-400);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+.custom-file-input {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+
+.custom-file-label {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Results page styles */
+.word-timeline {
+    line-height: 2;
+}
+
+.segment-words {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: rgba(var(--bs-dark-rgb), 0.05);
+}
+
+.word-item {
+    display: inline-block;
+    padding: 0.1rem 0.3rem;
+    margin: 0 0.1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.word-item:hover {
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+/* Audio player styling */
+.audio-player-container {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(var(--bs-dark-rgb), 0.05);
+}
+
+/* Download options styling */
+.download-option {
+    transition: transform 0.2s;
+}
+
+.download-option:hover {
+    transform: translateY(-3px);
+}
+
+/* Loading spinner */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Tab content styling */
+.tab-content {
+    padding: 1.5rem 0;
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+    padding: 1.5rem 0;
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+}
